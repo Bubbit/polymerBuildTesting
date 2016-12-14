@@ -61,32 +61,19 @@ gulp.task('test1', (cb) => {
     navigateFallback: '/index.html',
   };
 
-  // process source files in the project
-  let sources = project.sources()
-    .pipe(project.splitHtml())
-    .pipe(gulpif(/\.js$/, uglify()))
-    .pipe(gulpif(/\.css$/, cssSlam()))
-    .pipe(gulpif('*.html', html()))
-    .pipe(project.rejoinHtml());
-
-  // process dependencies
-  let dependencies = project.dependencies()
-    .pipe(project.splitHtml())
-    .pipe(gulpif(/\.js$/, uglify()))
-    .pipe(gulpif(/\.css$/, cssSlam()))
-    .pipe(gulpif('*.html', html()))
-    .pipe(project.rejoinHtml());
-
   // merge the source and dependencies streams to we can analyze the project
-  let allFiles = mergeStream(sources, dependencies);
+  let allFiles = mergeStream(project.sources(), project.dependencies());
 
   // fork the stream in case downstream transformers mutate the files
   // this fork will vulcanize the project
   let bundledPhase =
     fork(allFiles)
       .pipe(project.bundler)
-      // write to the bundled folder
-      // TODO(justinfagnani): allow filtering of files before writing
+      .pipe(project.splitHtml())
+      .pipe(gulpif(/\.js$/, uglify()))
+      .pipe(gulpif(/\.css$/, cssSlam()))
+      .pipe(gulpif('*.html', html()))
+      .pipe(project.rejoinHtml())
       .pipe(gulp.dest('build/bundled'));
 
   let unbundledPhase =
