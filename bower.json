@@ -1,0 +1,8 @@
+{
+  "name": "app",
+  "directory": "app/bower_components",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.6.0"
+  },
+  "private": true
+}
