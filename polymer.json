@@ -1,6 +1,6 @@
 {
   "entrypoint": "app/index.html",
-  "shell": "app/src/mock-app-main/mock-app-main.html",
+  "shell": "app/src/app-main/app-main.html",
   "fragments": [
   ],
   "sources": [
