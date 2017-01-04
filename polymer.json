@@ -1,10 +1,10 @@
 {
-  "entrypoint": "app/index.html",
-  "shell": "app/src/app-main/app-main.html",
+  "entrypoint": "index.html",
+  "shell": "build/unbundled/src/app-main/app-main.html",
   "fragments": [
   ],
   "sources": [
-    "app/src/**/*",
-    "app/bower.json"
+    "build/unbundled/src/**/*",
+    "bower.json"
   ]
 }

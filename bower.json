@@ -3,7 +3,8 @@
   "directory": "app/bower_components",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.6.0",
-    "test-card": "Bubbit/polymerComponent#master"
+    "test-card": "Bubbit/polymerComponent#master",
+    "app-localize-behavior": "^0.10.1"
   },
   "private": true
 }
