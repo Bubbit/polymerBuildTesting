@@ -72,7 +72,7 @@ gulp.task('unbundled', (cb) => {
   let sources = project.sources()
     .pipe(project.splitHtml())
     .pipe(gulpif(['**/*.js', '!**/*.min.js'], babel({ presets: ['es2015-nostrict'] })))
-    .pipe(gulpif(['**/*.js', '!**/*.min.js'], uglify({
+    .pipe(gulpif(['**/*.js', '!**/*.min.js', '!**/*behavior*.js', '!**/*behavior*/*.js', '!**/*iron-multi-selectable*.js'], uglify({
       preserveComments: function (node, comment) {
         return /@polymerBehavior/.test(comment.value);
       }
@@ -83,10 +83,11 @@ gulp.task('unbundled', (cb) => {
   let dependencies = project.dependencies()
     .pipe(project.splitHtml())
     .pipe(gulpif(['**/*.js', '!**/*.min.js'], babel({ presets: ['es2015-nostrict'] })))
-    .pipe(gulpif(['**/*.js', '!**/*.min.js', '!**/test*behavior*.js'], uglify({preserveComments: function (node, comment) {
-      console.log(node);
-          return /@polymerBehavior/.test(comment.value);
-    }})))
+    .pipe(gulpif(['**/*.js', '!**/*.min.js', '!**/*behavior*.js', '!**/*behavior*/*.js', '!**/*iron-multi-selectable*.js'], uglify({
+      preserveComments: function (node, comment) {
+        return /@polymerBehavior/.test(comment.value);
+      }
+    })))
     .pipe(project.rejoinHtml());
 
   // merge the source and dependencies streams to we can analyze the project
@@ -125,14 +126,14 @@ gulp.task('bundled', (cb) => {
     ]
   });
 
-  // let swConfig = {
-  //   staticFileGlobs: [
-  //     '/index.html',
-  //     '/shell.html',
-  //     '/source-dir/**',
-  //   ],
-  //   navigateFallback: '/index.html',
-  // };
+  let swConfig = {
+    staticFileGlobs: [
+      '/index.html',
+      '/shell.html',
+      '/source-dir/**',
+    ],
+    navigateFallback: '/index.html',
+  };
 
   // merge the source and dependencies streams to we can analyze the project
   let allFiles = mergeStream(project.sources(), project.dependencies());
@@ -150,20 +151,20 @@ gulp.task('bundled', (cb) => {
 
   // Once the bundled build stream is complete, create a service worker for the
   // // build
-  // let bundledPostProcessing = waitFor(bundledPhase).then(() => {
-  //   return addServiceWorker({
-  //     project: project,
-  //     buildRoot: 'build/bundled',
-  //     swConfig: swConfig,
-  //     bundled: true,
-  //   });
-  // });
+  let bundledPostProcessing = waitFor(bundledPhase).then(() => {
+    return addServiceWorker({
+      project: project,
+      buildRoot: 'build/bundled',
+      swConfig: swConfig,
+      bundled: true,
+    });
+  });
 
-  return bundledPhase;
+  return bundledPostProcessing;
 });
 
 gulp.task('default', gulp.series([
-    'clean',
-    'unbundled',
-    'bundled'
+  'clean',
+  'unbundled',
+  'bundled'
 ]));
