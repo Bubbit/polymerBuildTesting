@@ -83,10 +83,10 @@ gulp.task('unbundled', (cb) => {
   let dependencies = project.dependencies()
     .pipe(project.splitHtml())
     .pipe(gulpif(['**/*.js', '!**/*.min.js'], babel({ presets: ['es2015-nostrict'] })))
-    // .pipe(gulpif(['**/*.js', '!**/*.min.js'], uglify({preserveComments: function (node, comment) {
-    //       return /@polymerBehavior/.test(comment.value);
-    // }})))
-        .pipe(gulpif(['**/*.js', '!**/*.min.js'], uglify({preserveComments: 'all'})))
+    .pipe(gulpif(['**/*.js', '!**/*.min.js', '!**/test*behavior*.js'], uglify({preserveComments: function (node, comment) {
+      console.log(node);
+          return /@polymerBehavior/.test(comment.value);
+    }})))
     .pipe(project.rejoinHtml());
 
   // merge the source and dependencies streams to we can analyze the project
