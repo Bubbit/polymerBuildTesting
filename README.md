@@ -1,7 +1,7 @@
 # polymerBuildTesting
 
 ###Issue:
-Currently after the vulcanization of the our application we have an issue with some of the assetpaths being matched based on the location they are included from and not based on the fragment that is formed.
+Currently after the vulcanization of our application we have an issue with some of the assetpaths being matched based on the location they are included from and not based on the fragment that is formed.
 This results in some assets not being loaded.
 
 I've found a way to solve this in the vulcanize process, but the question is first if this is a way of working issue or an issue within the vulcanization process.
