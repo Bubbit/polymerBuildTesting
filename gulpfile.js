@@ -41,8 +41,8 @@ function waitFor(stream) {
 
 let project = new PolymerProject({
   root: process.cwd(),
-  entrypoint: 'app/index.html',
-  shell: 'app/src/app-main/app-main.html',
+  entrypoint: 'index.html',
+  shell: 'src/app-main/app-main.html',
 });
 
 // Clean build directory
@@ -50,7 +50,7 @@ gulp.task('clean', () => {
   return del('build');
 });
 
-gulp.task('test1', (cb) => {
+gulp.task('build', (cb) => {
 
   let swConfig = {
     staticFileGlobs: [
@@ -119,3 +119,8 @@ gulp.task('test1', (cb) => {
 
   return Promise.all([unbundledPostProcessing, bundledPostProcessing]);
 });
+
+gulp.task('default', gulp.series([
+  'clean',
+  'build'
+]));
