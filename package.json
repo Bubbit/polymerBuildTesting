@@ -36,8 +36,8 @@
     "gulp-uglify": "^2.0.0",
     "merge-stream": "^1.0.1",
     "plylog": "^0.4.0",
-    "polymer-build": "^0.6.0-alpha.1",
+    "polymer-build": "^0.6.0",
     "yargs": "^5.0.0",
-    "vulcanize": "1.15.1"
+    "vulcanize": "Bubbit/vulcanize"
   }
 }
