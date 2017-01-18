@@ -1,32 +1,24 @@
 # polymerBuildTesting
 
 ###Issue:
-Currently after the vulcanization of our application we have an issue with some of the assetpaths being matched based on the location they are included from and not based on the fragment that is formed.
-This results in some assets not being loaded.
+We use the npm module polymer-build for our tooling so we can minimize and transpile the code
 
-I've found a way to solve this in the vulcanize process, but the question is first if this is a way of working issue or an issue within the vulcanization process.
+Sadly if we run this through our pipeline we get: [unknown-polymer-behavior] - Unable to resolve behavior `TEST.ReduxBehavior`
 
-###Scenario:
-If the app that's being builded is using a dependency that has a certain stucture:
+We can fix this by moving the annotation to the top of the file, but this doesn't seem like a reasonable fix
 
-![component file structure](https://github.com/Bubbit/polymerBuildTesting/blob/vulcanize/images/Screen%20Shot%202017-01-09%20at%2016.46.05.png?raw=true)
+####Branches:
+- behavior (Is broken)
+- behavior-works (Works)
 
+If we use the polymer cli there are no issues.
 
-And the include flow is as follows:
-
-![include flow](https://github.com/Bubbit/polymerBuildTesting/blob/vulcanize/images/Screen%20Shot%202017-01-09%20at%2016.50.11.png?raw=true)
-
-
-In short:
-- App includes bower_components/test-card/test-a.html
-- test-a.html includes src/elements/test-b.html
-- test-b.html includes ../../test-c.html
+Are we doing something wrong?
 
 ###Steps to test:
 - Run npm i
 - Run bower i
 - Run node node_modules/.bin/gulp 
-- Check build/bundled/src/app-main/app-main.html -> assetpath of test-c.html is empty and should be '../../bower_components/test-card/'
 
 
   
