@@ -1,0 +1,15 @@
+
+<script>
+  window.TEST = window.TEST || /* istanbul ignore next */ {};
+  (function (NS) {
+    /* global Redux:false, PolymerRedux:false */
+    var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
+    var store = Redux.createStore(
+      NS.rootReducer,
+      composeEnhancers(Redux.applyMiddleware.apply(this, NS.reduxMiddleware))
+    );
+    /* eslint-disable no-param-reassign */
+    /** @polymerBehavior TEST.ReduxBehavior */
+    NS.ReduxBehavior = PolymerRedux(store);
+  }(TEST));
+</script>

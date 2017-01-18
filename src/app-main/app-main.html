@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/test-card/test-a.html">
-<link rel="import" href="../../bower_components/test-card/test-card.html">"
+<link rel="import" href="../../bower_components/test-card/test-card.html">
+<link rel="import" href="../behaviors/test-behavior.html">
 
 <dom-module id="app-main">
   <template>
@@ -16,6 +17,8 @@
 
       is: 'app-main',
 
+      behaviors: [TEST.ReduxBehavior],
+      
       properties: {
         prop1: {
           type: String,
