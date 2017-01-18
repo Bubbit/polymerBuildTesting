@@ -1,5 +1,6 @@
 
 <script>
+  /** @polymerBehavior TEST.ReduxBehavior */
   window.TEST = window.TEST || /* istanbul ignore next */ {};
   (function (NS) {
     /* global Redux:false, PolymerRedux:false */
@@ -9,7 +10,6 @@
       composeEnhancers(Redux.applyMiddleware.apply(this, NS.reduxMiddleware))
     );
     /* eslint-disable no-param-reassign */
-    /** @polymerBehavior TEST.ReduxBehavior */
     NS.ReduxBehavior = PolymerRedux(store);
   }(TEST));
 </script>
