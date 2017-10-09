@@ -1,10 +1,15 @@
 {
-  "entrypoint": "app/index.html",
-  "shell": "app/src/mock-app-main/mock-app-main.html",
+  "entrypoint": "index.html",
+  "shell": "src/app-main/app-main.html",
   "fragments": [
   ],
   "sources": [
-    "app/src/**/*",
-    "app/bower.json"
-  ]
+    "src/**/*"
+  ],
+  "root": "app",
+  "builds": [{
+    "name": "service",
+    "bundle": true,
+    "addServiceWorker": true
+  }]
 }
